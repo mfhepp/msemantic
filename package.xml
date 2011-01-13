@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Semantium_MSemanticBasic</name>
+ <channel>connect.magentocommerce.com/community</channel>
+ <summary>This extension puts your store on track to grasp the advantages of the semantic web / linked data movement. Based on the GoodRelations ontology, your store gets semantic markup that leverages SEO performance instantly.</summary>
+ <description>GoodRelations is a standardized vocabulary for product, price, and company data that can (1) be embedded into existing static and dynamic Web pages and that (2) can be processed by other computers. This increases the visibility of your products and services in the latest generation of search engines, recommender systems, and other novel applications. By integrating GoodRelations markup completely on the Business level and fundametally on the product level, the extension makes your store ready for the Semantic Web and brings immediate benefits on SEO level.
+
+Additional Information on the extension can be found at http://www.msemantic.com.
+
+The following ressources emphasize the positive outcome of using GoodRelations:
+
+* Semantic SEO for Google with GoodRelations and RDFa [http://www.heppresearch.com/gr4google]
+* Semantic Technology Blog: Online retail : How Best Buy is using Semantic Technology to define a new trend [http://priyankmohan.blogspot.com/2009/12/online-retail-how-best-buy-is-using.html]
+* How To Get Ranked Without Resorting to Outdated SEO Tactics [http://www.solutions-answers-results.com.au/index.php/Ways-to-Improve-Your-Website/How-To-Get-Ranked-Without-Resorting-to-Outdated-SEO-Tactics.html]</description>
+ <lead>
+  <name>Uwe Stoll (Semantium)</name>
+  <user>semantium</user>
+  <email>stoll@semantium.de</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Michael Lambertz</name>
+  <user>drcho</user>
+  <email>ml@digitallifedesign.net</email>
+  <active>no</active>
+ </developer>
+ <date>2010-12-01</date>
+ <time>14:41:56</time>
+ <version>
+  <release>0.9.9.2</release>
+  <api>1.4.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.gnu.org/licenses/lgpl.html">GNU/LGPL</license>
+ <notes>
+none
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="">
+    <dir name="modules">
+     <file md5sum="d273f2ff72e94efcc0f4566108c6cfdf" name="Semantium_MSemanticBasic.xml" role="mageetc" />
+    </dir> <!-- /modules -->
+    <dir name="Semantium">
+     <dir name="MSemanticBasic">
+      <dir name="Block">
+       <file md5sum="164ff85e939eac555bc06584c733eb2d" name="Business.php" role="magecommunity" />
+       <file md5sum="290db62bb5342a37db6348228ae57cd3" name="Datadump.php" role="magecommunity" />
+       <file md5sum="3d55b763293ca2b96201beceb296effd" name="Product.php" role="magecommunity" />
+       <file md5sum="5039b62205679115ebef99b34192df0a" name="Thanks.php" role="magecommunity" />
+      </dir> <!-- /Semantium/MSemanticBasic/Block -->
+      <dir name="controllers">
+       <file md5sum="504d40f8103ac4c6179a9265a31cec22" name="IndexController.php" role="magecommunity" />
+      </dir> <!-- /Semantium/MSemanticBasic/controllers -->
+      <dir name="etc">
+       <file md5sum="2f92ab77433b46fc4a956b4f50117fa0" name="config.xml" role="magecommunity" />
+       <file md5sum="348745d00eb2a7785b2eea230e899d55" name="system.xml" role="magecommunity" />
+      </dir> <!-- /Semantium/MSemanticBasic/etc -->
+      <dir name="Helper">
+       <file md5sum="6a63ec0e4ad76fcb7eda0090bbcab502" name="AbstractFormat.php" role="magecommunity" />
+       <file md5sum="fc2043acb2695b5304e9b762831cd208" name="Data.php" role="magecommunity" />
+       <file md5sum="eec533dee2be1f0469a15fefb5d06330" name="Div.php" role="magecommunity" />
+       <file md5sum="2df15ee78cf7b6f89c9cdd200cc01c02" name="Rdfaformat.php" role="magecommunity" />
+       <file md5sum="d7718fdca1c77e92668c6a3a3f76bdbd" name="Rdfformat.php" role="magecommunity" />
+       <file md5sum="3edac7805c663bd0d82ba85714a39dfb" name="Sysinfo.php" role="magecommunity" />
+      </dir> <!-- /Semantium/MSemanticBasic/Helper -->
+      <dir name="Model">
+       <dir name="Resource">
+        <dir name="Eav">
+         <dir name="Mysql4">
+          <file md5sum="72c13f92a857cbd5758a54ca1f805303" name="Setup.php" role="magecommunity" />
+         </dir> <!-- /Semantium/MSemanticBasic/Model/Resource/Eav/Mysql4 -->
+        </dir> <!-- /Semantium/MSemanticBasic/Model/Resource/Eav -->
+       </dir> <!-- /Semantium/MSemanticBasic/Model/Resource -->
+       <dir name="Source">
+        <file md5sum="650c03155a9a8797514fb7e596929d15" name="Valid.php" role="magecommunity" />
+       </dir> <!-- /Semantium/MSemanticBasic/Model/Source -->
+       <file md5sum="678c1a77374b33707bacb5ce57c6afc9" name="Business.php" role="magecommunity" />
+       <file md5sum="423ddc26bd597a7cea672c5837cc388c" name="GoodRelations.php" role="magecommunity" />
+       <file md5sum="3d12edeb1a5e2f91d49bc01d4c5b970c" name="Observer.php" role="magecommunity" />
+       <file md5sum="4e4d9c4ed3d7afabd90d2ca80fe8faf4" name="RDFs.php" role="magecommunity" />
+       <file md5sum="9f4b204b6efa429c2dee13d63813baec" name="test.php" role="magecommunity" />
+       <file md5sum="a697c5fd451fdf62f8317aae70b5c84c" name="VCard.php" role="magecommunity" />
+      </dir> <!-- /Semantium/MSemanticBasic/Model -->
+      <dir name="sql">
+       <dir name="msemanticbasic_setup">
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.8.0.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.8.1.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.8.2.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.8.3.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.8.4.php" role="magecommunity" />
+        <file md5sum="810144e6e3eff6073895b501ecee97f2" name="mysql4-install-0.8.5.php" role="magecommunity" />
+        <file md5sum="810144e6e3eff6073895b501ecee97f2" name="mysql4-install-0.8.6.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.0.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.1.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.2.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.4.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.5.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.6.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.7.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.8.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.9.1.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.9.2.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-install-0.9.9.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.8.0-0.8.1.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.8.1-0.8.2.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.8.2-0.8.3.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.8.3-0.8.4.php" role="magecommunity" />
+        <file md5sum="810144e6e3eff6073895b501ecee97f2" name="mysql4-upgrade-0.8.4-0.9.0.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.0-0.9.1.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.1-0.9.2.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.2-0.9.4.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.4-0.9.5.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.5-0.9.6.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.6-0.9.7.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.7-0.9.8.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.8-0.9.9.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.9-0.9.9.1.php" role="magecommunity" />
+        <file md5sum="24bb680b77c72bd957d8e941e1c02c07" name="mysql4-upgrade-0.9.9.1-0.9.9.2.php" role="magecommunity" />
+        <file md5sum="0168886ab4f6a6c2658fada0f5ff3727" name="script.sh" role="magecommunity" />
+       </dir> <!-- /Semantium/MSemanticBasic/sql/msemanticbasic_setup -->
+      </dir> <!-- /Semantium/MSemanticBasic/sql -->
+      <file md5sum="3238928e519682c150dcf0a8a5d58810" name="changelog.txt" role="magecommunity" />
+     </dir> <!-- /Semantium/MSemanticBasic -->
+    </dir> <!-- /Semantium -->
+   </dir> <!-- / -->
+   <dir name="frontend">
+    <dir name="default">
+     <dir name="default">
+      <dir name="layout">
+       <file md5sum="ebee7198bdbfbc6221f9abe2e07cea92" name="msemanticbasic.xml" role="magedesign" />
+      </dir> <!-- /frontend/default/default/layout -->
+      <dir name="template">
+       <dir name="semantium">
+        <file md5sum="26ff96865f95e91ee5d5596a30fea112" name="dump.phtml" role="magedesign" />
+       </dir> <!-- /frontend/default/default/template/semantium -->
+      </dir> <!-- /frontend/default/default/template -->
+     </dir> <!-- /frontend/default/default -->
+    </dir> <!-- /frontend/default -->
+   </dir> <!-- /frontend -->
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+    <max>6.0.0</max>
+   </php>
+   <pearinstaller>
+    <min>1.6.2</min>
+   </pearinstaller>
+   <extension>
+    <name>PDO</name>
+   </extension>
+  </required>
+ </dependencies>
+ <phprelease />
+</package>
