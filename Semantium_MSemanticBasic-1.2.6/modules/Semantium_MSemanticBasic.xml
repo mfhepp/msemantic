@@ -16,6 +16,9 @@
     <Semantium_MSemanticBasic>
       <active>true</active>
       <codePool>community</codePool>
+      <depends>
+                <Mage_Adminhtml />
+      </depends>
     </Semantium_MSemanticBasic>
     
   </modules>

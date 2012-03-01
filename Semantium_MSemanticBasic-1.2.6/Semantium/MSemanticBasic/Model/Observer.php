@@ -25,7 +25,7 @@ class Semantium_MSemanticBasic_Model_Observer
 	protected function notifySWSE($submission_url="http://gr-notify.appspot.com/submit?uri=") {
 		$email = Mage::getStoreConfig('trans_email/ident_general/email');
 		$base_url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
-		$sitemap_url = $submission_url.$base_url."sitemap.xml"."&contact=".$email."&agent=msemantic-0.9.9.3.8";
+		$sitemap_url = $submission_url.$base_url."sitemap.xml"."&contact=".$email."&agent=msemantic-1.2.6";
 		$this->_httpGet($sitemap_url);	
 		}
 	

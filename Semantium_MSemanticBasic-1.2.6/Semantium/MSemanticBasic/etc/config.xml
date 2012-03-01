@@ -13,7 +13,7 @@
 <config>
     <modules>
         <Semantium_MSemanticBasic>
-            <version>1.2.3</version>
+            <version>1.2.6</version>
             <depends>
                 <Mage_Page />
             </depends>
@@ -105,7 +105,9 @@
                 </Semantium_MSemanticBasic>
             </modules>
         </translate>
-    
+    	<rewrite>
+    		<system_config_source_product_attributes>Semantium_MSemanticBasic_Model_System_Config_Source_Product_Attributes</system_config_source_product_attributes>
+        </rewrite>
         <acl>
           <resources>
 			<all>
@@ -147,8 +149,16 @@
                     <model>msemanticbasic/observer::submitSemanticWebData</model>
                 </run>
             </catalog_product_alert>
+        	<create_sitemap>
+            	every minute
+                <schedule><cron_expr>* * * * *</cron_expr></schedule>
+                <run>
+                    <model>msemanticbasic/sitemap::createSitemap</model>
+                </run>
+            </create_sitemap>
         </jobs>
     </crontab>
+    
     
 <!-- BEGIN: setting the default values -->    
     <default>
@@ -227,6 +237,8 @@
             
             <strongid>
             	<strongid_type>ean13</strongid_type>
+            	<strongid_db>0</strongid_db>
+            	<strongid_dba>0</strongid_dba>
             </strongid>
             
             <!-- 

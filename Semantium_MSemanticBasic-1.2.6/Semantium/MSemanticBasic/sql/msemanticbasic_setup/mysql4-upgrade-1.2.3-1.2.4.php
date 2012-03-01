@@ -10,12 +10,8 @@
 **/
 $installer = $this;
 
-$base_url = $_SERVER['DOCUMENT_ROOT']
-$sitemap_url = "http://gr-notify.appspot.com/submit?uri=".$base_url."sitemap.xml"."&agent=msemantic";
-_semantiumMsemanticInstallHttpGet($sitemap_url);
 
 $installer->installEntities();
-
 
 
 

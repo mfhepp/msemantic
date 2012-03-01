@@ -45,6 +45,8 @@ abstract class Semantium_MSemanticBasic_Helper_AbstractFormat extends Mage_Core_
 		"gr:validThrough"			=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#dateTime"',
 		"gr:eligibleRegions"		=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#string"',
 		"gr:hasCurrencyValue"		=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#float"',
+		"gr:hasMaxCurrencyValue"	=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#float"',
+		"gr:hasMinCurrencyValue"	=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#float"',
 		"gr:hasCurrency"			=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#string"',
 		"gr:hasUnitOfMeasurement"	=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#string"',
 		"gr:valueAddedTaxIncluded"	=> '{rdf}datatype="http://www.w3.org/2001/XMLSchema#boolean"',

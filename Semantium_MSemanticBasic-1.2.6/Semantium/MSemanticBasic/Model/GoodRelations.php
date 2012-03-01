@@ -472,6 +472,9 @@ $manufacturers = $attribute->getSource()->getAllOptions(false);
 	
 	public function pOffering()
 	{
+		$productId = $this->Product->getId();
+   		$product = Mage::getModel('catalog/product')->load($productId);
+   		
 		$statements = "";
 		$grOffering = "";
 		$statements .= $this->pOffers();
@@ -500,11 +503,28 @@ $manufacturers = $attribute->getSource()->getAllOptions(false);
    
         //$statements .=  Mage::getStoreConfig('catalog/review');
 		//review stuff
+		$statements .= "
+		<div rel=\"foaf:maker\" resource=\"urn:goodrelations_shop_extensions:msemantic:v1.2.6\"></div>";
 	 	$array =  Mage::getStoreConfig('catalog/review');
 		if ($array['allow_guest'] == 1) // reviews active
             $statements .= $this->pReview();
 		$grOffering .= $this->rdff->wrapStatements($statements, $this->getURI('offering'), "gr:Offering");
 		$isSaleable = $this->Product->isSaleable();
+		
+		/* #This will be the related product code.
+		$related = $product->getUpsellProducts();
+		# print gettype($related);
+        # $related->load();	
+        foreach ($related as $item) {
+			# $item->setDoNotUseCategoryId(true);
+			print $item->getProductUrl();
+			print $item->getName();
+			# print gettype($item);
+		}
+		*/
+		
+		
+		
 		return $grOffering;
 		
 	}
@@ -549,10 +569,16 @@ $manufacturers = $attribute->getSource()->getAllOptions(false);
 		return $pHasBusinessFunction;
 	}
 	
+	
+	###################
+	
 	protected function pHasPriceSpecification()
 	{
 		$priceSpecifications = "";
-		
+		$productId = $this->Product->getId();
+	    
+		$product = Mage::getModel('catalog/product')->load($productId);
+		$storeId = Mage::app()->getStore()->getId();
 		
 		//check if tax is in price
 		$tax = Mage::helper('tax');
@@ -563,73 +589,68 @@ $manufacturers = $attribute->getSource()->getAllOptions(false);
 		// check if special price
 		
 		if ($this->Product->getSpecialPrice()) {
-		$propArray_reg = array(
-			"gr:hasCurrencyValue"		=> round($this->Product->getPrice(1), 2), // 1 unit
-			"gr:hasCurrency"			=> Mage::app()->getStore()->getCurrentCurrencyCode(),
-			"gr:hasUnitOfMeasurement"	=> "C62"	// price per unit
-		);
-		$propArray_special = array(
-			"gr:hasCurrencyValue"		=> round($this->Product->getSpecialPrice(1), 2), // 1 unit
-			"gr:hasCurrency"			=> Mage::app()->getStore()->getCurrentCurrencyCode(),
-			"gr:hasUnitOfMeasurement"	=> "C62"	// price per unit
-		);
-		// spec. price
-		// first regular price
-		
-		// $statements = $this->rdff->properties($propArray_reg,$this->getReplacements());
-		
-	   // $statements .= $this->validFromThrough();
+			$propArray_reg = array(
+				"gr:hasCurrencyValue"		=> round($this->Product->getPrice(1), 2), // 1 unit
+				"gr:hasCurrency"			=> Mage::app()->getStore()->getCurrentCurrencyCode(),
+				"gr:hasUnitOfMeasurement"	=> "C62"	// price per unit
+			);
+			$propArray_special = array(
+				"gr:hasCurrencyValue"		=> round($this->Product->getSpecialPrice(1), 2), // 1 unit
+				"gr:hasCurrency"			=> Mage::app()->getStore()->getCurrentCurrencyCode(),
+				"gr:hasUnitOfMeasurement"	=> "C62"	// price per unit
+			);
 			
-		 // $attributes = $this->rdff->wrapStatements($statements, $this->getURI("regularUnitPriceSpecification"), "gr:UnitPriceSpecification" );
+			$statements = $this->rdff->properties($propArray_special,$this->getReplacements());
+			
+			if ( $this->Product->getSpecialToDate() ){
+					$validproperties = array(
+					"gr:validFrom"		=> $this->div->dateToIso8601( $this->Product->getSpecialFromDate() ), 
+					"gr:validThrough"	=> $this->div->dateToIso8601( $this->Product->getSpecialToDate() ) 
+					);
+				$statements .= $this->rdff->properties($validproperties, $this->getReplacements());
+				}
+			else { $statements .= $this->validFromThrough();}
+			
+			$attributes = $this->rdff->wrapStatements($statements, $this->getURI("specialUnitPriceSpecification"), "gr:UnitPriceSpecification" );
+			}
 		
-		// then special price
 		
-		$statements = $this->rdff->properties($propArray_special,$this->getReplacements());
-		
-		
-		//
-		
-		if ( $this->Product->getSpecialToDate() ){
-				$validproperties = array(
-			"gr:validFrom"		=> $this->div->dateToIso8601( $this->Product->getSpecialFromDate() ), 
-			"gr:validThrough"	=> $this->div->dateToIso8601( $this->Product->getSpecialToDate() ) 
-		);
-		$statements .= $this->rdff->properties($validproperties, $this->getReplacements());
-		
-		}
 		else {
-		$statements .= $this->validFromThrough();}
-		
-		
-		
+			// pricing
 			
-		$attributes = $this->rdff->wrapStatements($statements, $this->getURI("specialUnitPriceSpecification"), "gr:UnitPriceSpecification" );
-		
-	    
-		
+			
+			
+			
+			if ($product->getTypeId() == "bundle") { 
+			
+			// get min price of bundle
+			
+			$minmax = $product->getPriceModel()->getPrices($product);
+			$propArray["gr:hasMinCurrencyValue"] = round($minmax[0],2); 
+			$propArray["gr:hasMaxCurrencyValue"] = round($minmax[1],2); }
+			
+			else { $propArray["gr:hasCurrencyValue"] = round($this->Product->getFinalPrice(1), 2); }
+		 	
+			// rest of array
+			$propArray["gr:hasCurrency"] = Mage::app()->getStore()->getCurrentCurrencyCode();
+			$propArray["gr:hasUnitOfMeasurement"] = "C62";
+			
+			$statements = $this->rdff->properties($propArray,$this->getReplacements());
+			$statements .= $this->validFromThrough();
+			$attributes = $this->rdff->wrapStatements($statements, $this->getURI("unitPriceSpecification"), "gr:UnitPriceSpecification" );
+			
 		}
 		
 		
-		else { 
-		$propArray = array(
-			"gr:hasCurrencyValue"		=> round($this->Product->getFinalPrice(1), 2), // 1 unit
-			"gr:hasCurrency"			=> Mage::app()->getStore()->getCurrentCurrencyCode(),
-			"gr:hasUnitOfMeasurement"	=> "C62"	// price per unit
-		); 
-		$statements = $this->rdff->properties($propArray,$this->getReplacements());
-		
-		$statements .= $this->validFromThrough();
-			
-		$attributes = $this->rdff->wrapStatements($statements, $this->getURI("unitPriceSpecification"), "gr:UnitPriceSpecification" );
-		
-		//$attributes .= $this->pValidFromThrough(); 
-		
-		}
-	
 		$priceSpecifications .= $this->rdff->wrapRel($attributes, "gr:hasPriceSpecification");
 		
 		return $priceSpecifications;
 	}
+	
+	
+	###########################
+	
+	
 	
 	protected function pValidFromThrough()
 	{
@@ -727,7 +748,7 @@ $manufacturers = $attribute->getSource()->getAllOptions(false);
    		
    		$productId = $this->Product->getId();
    		$product = Mage::getModel('catalog/product')->load($productId);
-   		
+   		$storeId = Mage::app()->getStore()->getId();
    		
    		
    		if ($product->getData('condition')) {
@@ -754,32 +775,38 @@ $manufacturers = $attribute->getSource()->getAllOptions(false);
 		$statements .= $this->rdff->rel("gr:hasManufacturer",$this->Business->getBaseURL() . '#manufacturer_'.$product->getData('manufacturer'), NULL,"en");
 		}
 		
+				
 
-$categoryIds = $product->getCategoryIds();
+		$categoryIds = $product->getCategoryIds();
 
-foreach($categoryIds as $categoryId) {
-  $category = Mage::getModel('catalog/category')->load($categoryId);
+		foreach($categoryIds as $categoryId) {
+  			$category = Mage::getModel('catalog/category')->load($categoryId);
   
-  $i = $category->getLevel();
-  $parent = $category;
-  $category_name = "";
-  while($i > 1) {
-      $parent = Mage::getModel('catalog/category')->load($parent->getParentId());
-      $category_name = $parent->getName()."/".$category_name;
-  $i--;
-  }
-  if ($category->getName()) $statements .= $this->rdff->property("gr:category",$category_name.$category->getName(),NULL,$this->sysinfo->getLocaleCode());
+  			$i = $category->getLevel();
+  			$parent = $category;
+  			$category_name = "";
+  			while($i > 2) {
+      			$parent = Mage::getModel('catalog/category')->load($parent->getParentId());
+      			if ($parent->getName() != "Hauptnavigation") {
+      				$category_name = $parent->getName()."/".$category_name;
+  	  				}
+  				$i--;
+  			}
+  
+  if ($category->getName()) $statements .= $this->rdff->property("gr:category",htmlentities($category_name.$category->getName(),ENT_QUOTES,"UTF-8"),NULL,$this->sysinfo->getLocaleCode());
   
 }
 
+		$settings = Mage::getStoreConfig("semantium");
 		
-		// strongId if isset
-		// changed in version 0.9.9.3.9
-		// Michael Lambertz 2011-07-12
-		$strongId = $this->productGetAttributeValue('strongid');
+		if (@$settings['strongid']['strongid_db']) {
+		$strongId = $product->getData(@$settings['strongid']['strongid_dba']);
+		}
+
+		else {$strongId = $this->productGetAttributeValue('strongid');}
+
 		if ($strongId)
 		{
-			
 			$settings = Mage::getStoreConfig("semantium");
 			$strongid_type = @$settings['strongid']['strongid_type'];
 			
@@ -807,18 +834,31 @@ foreach($categoryIds as $categoryId) {
 		
 		// dawn of template style
 		
+		// Inventory - VALID
+	   
+	    
+		if ($product->getTypeId() != "bundle" and $product->getTypeId() != "configurable") {
+		
+		if ($product->getStockItem()->getManageStock())
+		{
+		
 		$inv = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product)->getQty();
-		$statements .= "<div rel=\"gr:hasInventoryLevel\">
-	<div typeof=\"gr:QuantitativeValueFloat\">
-    	<div property=\"gr:hasValueFloat\" content=\"".$inv."\" datatype=\"xsd:float\">".
-       		"</div>
-            <div property=\"gr:hasUnitOfMeasurement\" datatype=\"xsd:string\" content=\"C62\">
-     </div>
-</div>
-</div>
-";
+		}
+		else {
+		if ($product->isSaleable()) {/*$inv = 42;*/}
+		}
 		
+	    if (isset($inv)) {
+   					$statements .= "
+<div rel=\"gr:hasInventoryLevel\">
+	<div typeof=\"gr:QuantitativeValue\">
+    	<div property=\"gr:hasMinValue\" content=\"".round($inv,0)."\" datatype=\"xsd:float\"></div>
+        <div property=\"gr:hasUnitOfMeasurement\" datatype=\"xsd:string\" content=\"C62\"></div>
+	</div>
+</div>";
+			}
 		
+		}
 		
 		
 		
